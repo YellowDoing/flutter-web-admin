@@ -83,14 +83,9 @@ class _HomePageState extends State<HomePage> {
 
         _actionGithub(),
 
-
-
         _actionTranslate(),
 
         _actionUserInfo(),
-
-
-
       ],
     );
   }
@@ -144,10 +139,10 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.fromLTRB(12, 0, 16, 0),
           child: Row(
             children: [
-              ClipOval(child: Image.asset('res/images/avatar.jpg',width: 36,),)
+              ClipOval(child: Image.asset('res/images/avatar.jpg',width: 36))
               ,Padding(
                 padding: EdgeInsets.only(left: 6),
-                child: Text('Catalina',style: TextStyle(fontSize: 15,height: 1),),
+                child: Text('Catalina',style: TextStyle(fontSize: 15),),
               )
             ],
           ),
