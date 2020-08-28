@@ -116,23 +116,40 @@ class MenuItem {
 }
 
 class Menu extends StatefulWidget {
+
+  final Color color;
+
+  final Color selectColor;
+
+  final Color selectItemColor;
+
   final List<MenuItem> items;
 
   final double width;
 
   final double height;
 
-  Menu(
-      {this.items = const [], this.width = 230, this.height = double.infinity});
+  Menu({
+    this.items = const [],
+    this.width = 230,
+    this.height = double.infinity,
+    this.color = Colors.white,
+    this.selectColor = Colors.white,
+    this.selectItemColor = const Color(0xFFEEEEEE),
+  });
 
   @override
   _MenuState createState() => _MenuState();
 }
 
 class _MenuState extends State<Menu> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: Colors.white,
         height: widget.height,
         width: widget.width,
         child: Row(
@@ -169,6 +186,7 @@ class _MenuState extends State<Menu> {
                           );
                         },
                         body: Container(
+                          color: menuItem.isExpanded ? widget.selectItemColor : widget.color,
                           width: double.infinity,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

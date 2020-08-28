@@ -54,6 +54,15 @@ class _HomePageState extends State<HomePage> {
                   Icons.wallpaper,
                   size: 19,
                 )),
+
+            MenuItem(
+                text: '个人页',
+                subItems: ['个人中心', '个人设置'],
+                icon: Icon(
+                  Icons.wallpaper,
+                  size: 19,
+                )),
+
             MenuItem(
                 text: 'Navigation Four',
                 icon: Icon(
