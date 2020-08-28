@@ -73,11 +73,11 @@ class ExpansionPanel {
     this.isExpanded = false,
     this.showRightIcon = true,
     this.canTapOnHeader = false,
+    this.headerColor
   })  : assert(headerBuilder != null),
         assert(body != null),
         assert(isExpanded != null),
         assert(canTapOnHeader != null);
-
 
   final bool showRightIcon;
 
@@ -98,6 +98,9 @@ class ExpansionPanel {
   ///
   /// Defaults to false.
   final bool canTapOnHeader;
+
+
+  final Color headerColor;
 }
 
 /// An expansion panel that allows for radio-like functionality.
@@ -308,16 +311,16 @@ class ExpansionPanelList extends StatefulWidget {
   /// }
   /// ```
   /// {@end-tool}
-  const ExpansionPanelList.radio({
-    Key key,
-    this.children = const <ExpansionPanelRadio>[],
-    this.expansionCallback,
-    this.animationDuration = kThemeAnimationDuration,
-    this.initialOpenPanelValue,
-    this.expandedHeaderPadding = _kPanelHeaderExpandedDefaultPadding,
-    this.dividerColor,
-
-  })  : assert(children != null),
+  const ExpansionPanelList.radio(
+      {Key key,
+      this.children = const <ExpansionPanelRadio>[],
+      this.expansionCallback,
+      this.animationDuration = kThemeAnimationDuration,
+      this.initialOpenPanelValue,
+      this.expandedHeaderPadding = _kPanelHeaderExpandedDefaultPadding,
+      this.dividerColor,
+      })
+      : assert(children != null),
         assert(animationDuration != null),
         _allowOnlyOnePanelOpen = true,
         super(key: key);
@@ -498,30 +501,32 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
         );
       }
 
-
       var children = <Widget>[
         Expanded(
           child: ConstrainedBox(
             constraints:
-            const BoxConstraints(minHeight: _kPanelHeaderCollapsedHeight),
+                const BoxConstraints(minHeight: _kPanelHeaderCollapsedHeight),
             child: headerWidget,
           ),
         ),
       ];
 
-      if(child.showRightIcon){
+      if (child.showRightIcon) {
         debugPrint(widget.children.length.toString());
-        children.add(expandIconContainer) ;
+        children.add(expandIconContainer);
       }
 
       Widget header = Row(
-        children:children ,
+        children: children,
       );
       if (child.canTapOnHeader) {
         header = MergeSemantics(
-          child: InkWell(
-            onTap: () => _handlePressed(_isChildExpanded(index), index),
-            child: header,
+          child: Container(
+            color: child.headerColor,
+            child: RawMaterialButton(
+              onPressed: () => _handlePressed(_isChildExpanded(index), index),
+              child: header,
+            ),
           ),
         );
       }

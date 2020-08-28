@@ -4,15 +4,13 @@
 
 ## Getting Started
 
-如果你当前Flutter的Channel是release，请先切换到beta，目前release还不支持开启web
+如果你Flutter使用的Channel是release，请先切换到beta，目前release还不支持开启web
 
-'''
 
+```
 #切换到beta版
 flutter channel beta
 
 #开启web
 flutter config --enable-web
-
-'''
-
+```
