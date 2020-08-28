@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'my/my_expansion_pane.dart' as My;
 
+typedef OnMenuSelectedListener = void Function(
+    String id, String title, String subItem);
+
 class MenuItem {
   int id;
 
@@ -13,12 +16,14 @@ class MenuItem {
 
   Widget icon;
 
+  final defaultExpanded = false;
+
   MenuItem({
     @required this.text,
     this.subItems = const [],
     this.icon,
     bool defaultExpanded = false,
-  }) : isExpanded = defaultExpanded;
+  });
 }
 
 class Menu extends StatefulWidget {
@@ -36,26 +41,39 @@ class Menu extends StatefulWidget {
 
   final double height;
 
-  Menu({
-    this.items = const [],
-    this.width = 230,
-    this.height = double.infinity,
-    this.color = Colors.white,
-    this.selectColor = const Color(0xFFEEEEEE),
-    this.selectItemColor = const Color(0xFFEEEEEE),
-    this.expandColor = const Color(0xdcfafafa),
-  });
+  final OnMenuSelectedListener onMenuSelected;
+
+  final String defaultSelectId;
+
+  Menu(
+      {@required this.items,
+      this.width = 230,
+      this.height = double.infinity,
+      this.color = Colors.white,
+      this.selectColor = const Color(0xFFEEEEEE),
+      this.selectItemColor = const Color(0xFFEEEEEE),
+      this.expandColor = const Color(0xdcfafafa),
+      this.defaultSelectId = '',
+      @required this.onMenuSelected})
+      : assert(onMenuSelected != null),
+        assert(items != null);
 
   @override
   _MenuState createState() => _MenuState();
 }
 
 class _MenuState extends State<Menu> {
-  String _selectId = '';
+
+  String _selectId;
+
+  @override
+  void initState() {
+    _selectId = widget.defaultSelectId;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Colors.grey
     return Container(
         color: widget.color,
         height: widget.height,
@@ -65,43 +83,52 @@ class _MenuState extends State<Menu> {
           children: [
             Expanded(
                 child: Wrap(
-              children: [
-                My.ExpansionPanelList(
-                  expansionCallback: (index, isExpanded) {
-                    var item =  widget.items[index];
-                    setState(() {
-                      item.isExpanded = !item.isExpanded;
-                    });
-
-                    if( item.isExpanded && item.subItems.isEmpty){
-                      setState(() {
-                        _selectId = (index +1).toString();
-                      });
-                    }
-                  },
-                  children: _buildMenu(),
-                )
-              ],
+              children: [_buildExpansionPanelList()],
             )),
-            Container(
-              height: double.infinity,
-              width: 1,
-              color: Colors.grey[200],
-            )
+            _buildRightVerticalLine()
           ],
         ));
   }
 
-  List<My.ExpansionPanel> _buildMenu() {
+  My.ExpansionPanelList _buildExpansionPanelList() {
+    return My.ExpansionPanelList(
+      expansionCallback: (index, isExpanded) {
+        var item = widget.items[index];
+        setState(() {
+          item.isExpanded = !item.isExpanded;
+        });
+
+        if (item.isExpanded && item.subItems.isEmpty) {
+          setState(() {
+            _selectId = (index + 1).toString();
+          });
+          widget.onMenuSelected?.call(_selectId, item.text, null);
+        }
+      },
+      children: _buildMenuItems(),
+    );
+  }
+
+  ///右侧分割线
+  Container _buildRightVerticalLine() {
+    return Container(
+      height: double.infinity,
+      width: 1,
+      color: Colors.grey[200],
+    );
+  }
+
+  List<My.ExpansionPanel> _buildMenuItems() {
     return widget.items.map((menuItem) {
       var id = (widget.items.indexOf(menuItem) + 1).toString();
 
       return My.ExpansionPanel(
           showRightIcon: menuItem.subItems.isNotEmpty,
           isExpanded: menuItem.isExpanded,
-          headerColor: (_selectId == id && menuItem.subItems.isEmpty) ? widget.selectColor : null,
+          headerColor: (_selectId == id && menuItem.subItems.isEmpty)
+              ? widget.selectColor
+              : null,
           headerBuilder: (_, expand) {
-
             return Container(
               padding: EdgeInsets.only(left: 14),
               child: Row(
@@ -121,46 +148,33 @@ class _MenuState extends State<Menu> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: menuItem.subItems.map((subTitle) {
-                var itemId =
-                    '${widget.items.indexOf(menuItem) + 1}-${menuItem.subItems.indexOf(subTitle) +1}';
-                return RawMaterialButton(
-                  child: Container(
-                    color: _selectId == itemId ? widget.selectItemColor : null,
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(42, 12, 0, 12),
-                    child: Text(
-                      subTitle,
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _selectId = itemId;
-                    });
-                  },
-                );
+                return _buildMenSubItem(menuItem, subTitle);
               }).toList(),
             ),
           ),
           canTapOnHeader: true);
     }).toList();
   }
-}
 
-// class _SubMenuItems extends StatefulWidget {
-//   final List<String> subItems;
-//
-//   _SubMenuItems(this.subItems);
-//
-//   @override
-//   _SubMenuItemsState createState() => _SubMenuItemsState();
-// }
-//
-// class _SubMenuItemsState extends State<_SubMenuItems> {
-//
-//   int _tapIndex = -1;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ;
-//   }
-// }
+  RawMaterialButton _buildMenSubItem(MenuItem menuItem, String subTitle) {
+    var itemId =
+        '${widget.items.indexOf(menuItem) + 1}-${menuItem.subItems.indexOf(subTitle) + 1}';
+
+    return RawMaterialButton(
+      child: Container(
+        color: _selectId == itemId ? widget.selectItemColor : null,
+        width: double.infinity,
+        padding: EdgeInsets.fromLTRB(42, 12, 0, 12),
+        child: Text(
+          subTitle,
+        ),
+      ),
+      onPressed: () {
+        setState(() {
+          _selectId = itemId;
+        });
+        widget.onMenuSelected?.call(_selectId, menuItem.text, subTitle);
+      },
+    );
+  }
+}
