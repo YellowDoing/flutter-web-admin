@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'my/my_expansion_pane.dart' as My;
 
-typedef OnMenuSelectedListener = void Function(
-    String id, String title, String subItem);
 
 class MenuItem {
   int id;
@@ -12,21 +10,21 @@ class MenuItem {
 
   final List<String> subItems;
 
-  bool isExpanded = false;
+  bool isExpanded;
 
   Widget icon;
 
-  final defaultExpanded = false;
 
   MenuItem({
     @required this.text,
     this.subItems = const [],
     this.icon,
     bool defaultExpanded = false,
-  });
+  }):isExpanded = defaultExpanded;
 }
 
 class Menu extends StatefulWidget {
+
   final Color color;
 
   final Color expandColor;
@@ -41,9 +39,9 @@ class Menu extends StatefulWidget {
 
   final double height;
 
-  final OnMenuSelectedListener onMenuSelected;
+  final ValueChanged<String> onMenuSelected;
 
-  final String defaultSelectId;
+  final String selectId;
 
   Menu(
       {@required this.items,
@@ -53,7 +51,7 @@ class Menu extends StatefulWidget {
       this.selectColor = const Color(0xFFEEEEEE),
       this.selectItemColor = const Color(0xFFEEEEEE),
       this.expandColor = const Color(0xdcfafafa),
-      this.defaultSelectId = '',
+      this.selectId = '',
       @required this.onMenuSelected})
       : assert(onMenuSelected != null),
         assert(items != null);
@@ -68,7 +66,7 @@ class _MenuState extends State<Menu> {
 
   @override
   void initState() {
-    _selectId = widget.defaultSelectId;
+    //widget.items.forEach((element)=>element.isExpanded = element.defaultExpanded);
     super.initState();
   }
 
@@ -93,16 +91,18 @@ class _MenuState extends State<Menu> {
   My.ExpansionPanelList _buildExpansionPanelList() {
     return My.ExpansionPanelList(
       expansionCallback: (index, isExpanded) {
+
         var item = widget.items[index];
+
         setState(() {
           item.isExpanded = !item.isExpanded;
         });
 
         if (item.isExpanded && item.subItems.isEmpty) {
-          setState(() {
+         // setState(() {
             _selectId = (index + 1).toString();
-          });
-          widget.onMenuSelected?.call(_selectId, item.text, null);
+          //});
+          widget.onMenuSelected?.call(_selectId);
         }
       },
       children: _buildMenuItems(),
@@ -170,10 +170,10 @@ class _MenuState extends State<Menu> {
         ),
       ),
       onPressed: () {
-        setState(() {
+        //setState(() {
           _selectId = itemId;
-        });
-        widget.onMenuSelected?.call(_selectId, menuItem.text, subTitle);
+        //});
+        widget.onMenuSelected?.call(_selectId);
       },
     );
   }

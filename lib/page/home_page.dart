@@ -1,4 +1,4 @@
-import 'package:admin_flutter_web/view/table_view.dart';
+import 'dart:html' as html;
 import 'package:admin_flutter_web/widget/menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +13,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final Map<String, dynamic> _menu = {
     'Navigation One': {
-      'items':['subItem one', 'subItem two', 'subItem three'],
-      'icon':Icons.tune,
-
+      'items': ['subItem one', 'subItem two', 'subItem three'],
+      'icon': Icons.tune,
     },
     'Navigation Two': ['subItem one', 'subItem two', 'subItem three'],
     'Navigation Three': ['subItem one', 'subItem two', 'subItem three'],
@@ -24,7 +23,9 @@ class _HomePageState extends State<HomePage> {
     'Navigation Five': [],
   };
 
-  Widget _title = Container();
+  String _menuSelectId = '1-1';
+
+  //Widget _title = Container();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,9 @@ class _HomePageState extends State<HomePage> {
       height: double.infinity,
       padding: EdgeInsets.all(16),
       child: Column(
-        children: [_title],
+        children: [
+          /*_title*/
+        ],
       ),
     );
   }
@@ -50,48 +53,46 @@ class _HomePageState extends State<HomePage> {
   ///左侧菜单导航
   Menu _buildMenu() {
     return Menu(
-        defaultSelectId: '1-1',
-        onMenuSelected: _onMenuSelect,
-        items: [
-          MenuItem(
-              text: 'Navigation One',
-              subItems: ['subItem one', 'subItem two', 'subItem three'],
-              defaultExpanded: true,
-              icon: Icon(Icons.tune, size: 19)),
-          MenuItem(
-              text: 'Navigation One',
-              subItems: ['subItem one', 'subItem two', 'subItem three'],
-              defaultExpanded: true,
-              icon: Icon(Icons.tune, size: 19)),
-          MenuItem(
-              text: 'Navigation One',
-              subItems: ['subItem one', 'subItem two', 'subItem three'],
-              icon: Icon(Icons.tune, size: 19)),
-          MenuItem(
-              text: '个人页',
-              subItems: ['个人中心', '个人设置'],
-              icon: Icon(Icons.tune, size: 19)),
-          MenuItem(
-              text: 'Navigation One',
-              subItems: ['subItem one', 'subItem two', 'subItem three'],
-              icon: Icon(Icons.tune, size: 19)),
-          MenuItem(
-              text: 'Navigation One',
-              icon: Icon(Icons.tune, size: 19)),
-          MenuItem(
-              text: 'Navigation One',
-              icon: Icon(Icons.tune, size: 19)),
-          MenuItem(
-              text: 'Navigation One',
-              subItems: ['subItem one', 'subItem two', 'subItem three'],
-              icon: Icon(Icons.tune, size: 19)),
-        ]);
+      selectId: _menuSelectId,
+      onMenuSelected: _onMenuSelect,
+      items: [
+        MenuItem(
+            text: 'Navigation One',
+            subItems: ['subItem one', 'subItem two', 'subItem three'],
+            defaultExpanded: true,
+            icon: Icon(Icons.tune, size: 19)),
+        MenuItem(
+            text: 'Navigation One',
+            subItems: ['subItem one', 'subItem two', 'subItem three'],
+            defaultExpanded: true,
+            icon: Icon(Icons.tune, size: 19)),
+        MenuItem(
+            text: 'Navigation One',
+            subItems: ['subItem one', 'subItem two', 'subItem three'],
+            icon: Icon(Icons.tune, size: 19)),
+        MenuItem(
+            text: '个人页',
+            subItems: ['个人中心', '个人设置'],
+            icon: Icon(Icons.tune, size: 19)),
+        MenuItem(
+            text: 'Navigation One',
+            subItems: ['subItem one', 'subItem two', 'subItem three'],
+            icon: Icon(Icons.tune, size: 19)),
+        MenuItem(text: 'Navigation One', icon: Icon(Icons.tune, size: 19)),
+        MenuItem(text: 'Navigation One', icon: Icon(Icons.tune, size: 19)),
+        MenuItem(
+            text: 'Navigation One',
+            subItems: ['subItem one', 'subItem two', 'subItem three'],
+            icon: Icon(Icons.tune, size: 19)),
+      ],
+    );
   }
 
-  void _onMenuSelect(id, String title, String subItem) {
+  void _onMenuSelect(id) {
     debugPrint('sdawdawd');
     setState(() {
-      _title = _buildTitle(title, subItem);
+      // _title = _buildTitle(title, subItem);
+      _menuSelectId = id;
     });
     switch (id) {
     }
@@ -200,18 +201,23 @@ class _HomePageState extends State<HomePage> {
     return PopupMenuButton(
         offset: Offset(0, 68),
         tooltip: 'Github',
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(12, 0, 16, 0),
-          child: Image.asset(
-            'res/images/github.png',
-            width: 21,
+        child: GestureDetector(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(12, 0, 16, 0),
+            child: Image.asset(
+              'res/images/github.png',
+              width: 21,
+            ),
           ),
+          onTap: () {
+            html.window.open('https://github.com/YellowDoing/flutter-web-admin',
+                'flutter-web-admin');
+          },
         ),
         itemBuilder: (_) => []);
   }
 
   Widget _buildTitle(String title, String subTitle) {
-    debugPrint('ssssssssssssss');
     var children = [Text(title)];
 
     if (subTitle != null) {
