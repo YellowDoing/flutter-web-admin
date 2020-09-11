@@ -1,8 +1,8 @@
 import 'package:admin_flutter_web/generated/json/base/json_convert_content.dart';
 
-class AccountEntity with JsonConvert<AccountEntity> {
+class UserEntity with JsonConvert<UserEntity> {
 	int id;
 	String name;
 	String token;
-	String account;
+	String username;
 }

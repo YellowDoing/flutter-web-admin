@@ -14,9 +14,9 @@ class HttpUtil<T> {
 
   final String url;
 
-  final ErrorCallback errorCallback;
+  final ErrorCallback error;
 
-  final VoidCallback completeCallback;
+  final VoidCallback complete;
 
   final body;
 
@@ -28,8 +28,8 @@ class HttpUtil<T> {
 
   HttpUtil.post(
       {this.url,
-      this.completeCallback,
-      this.errorCallback,
+      this.complete,
+      this.error,
       this.body = const {},
       this.headers,
       this.success,

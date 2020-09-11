@@ -1,17 +1,22 @@
-import 'package:admin_flutter_web/entry/account_entity.dart';
+import 'package:admin_flutter_web/entry/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 
 class AuthData with ChangeNotifier{
 
+
   bool isLogin = false;
 
-  AccountEntity accountEntity;
+  UserEntity userEntity;
 
 
-  void login(AccountEntity accountEntity){
+  void login(UserEntity userEntity){
+
     isLogin = true;
-    this.accountEntity = accountEntity;
+
+    this.userEntity = userEntity;
+
     notifyListeners();
+
   }
 
 }

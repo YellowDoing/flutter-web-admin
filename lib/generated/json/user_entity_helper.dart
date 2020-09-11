@@ -1,6 +1,6 @@
-import 'package:admin_flutter_web/entry/account_entity.dart';
+import 'package:admin_flutter_web/entry/user_entity.dart';
 
-accountEntityFromJson(AccountEntity data, Map<String, dynamic> json) {
+accountEntityFromJson(UserEntity data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
 		data.id = json['id']?.toInt();
 	}
@@ -10,17 +10,17 @@ accountEntityFromJson(AccountEntity data, Map<String, dynamic> json) {
 	if (json['token'] != null) {
 		data.token = json['token']?.toString();
 	}
-	if (json['account'] != null) {
-		data.account = json['account']?.toString();
+	if (json['username'] != null) {
+		data.username = json['username']?.toString();
 	}
 	return data;
 }
 
-Map<String, dynamic> accountEntityToJson(AccountEntity entity) {
+Map<String, dynamic> accountEntityToJson(UserEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['id'] = entity.id;
 	data['name'] = entity.name;
 	data['token'] = entity.token;
-	data['account'] = entity.account;
+	data['username'] = entity.username;
 	return data;
 }
