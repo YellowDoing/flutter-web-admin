@@ -3,6 +3,7 @@ import 'package:admin_flutter_web/data/auth_data.dart';
 import 'package:admin_flutter_web/util/view_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 
@@ -18,9 +19,17 @@ class _SignPageState extends State<SignPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       body: Container(
         width: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('res/images/sign_bg_2.jpg')
+          )
+        ),
         child: Stack(
           children: [
             Column(
@@ -62,14 +71,15 @@ class _SignPageState extends State<SignPage> {
   ///副标题
   Widget _buildSubTitle() {
     return Text('Flutter Web Admin 是使用Dart语言和Flutter技术开发的后台管理系统模板',
-        style: TextStyle(color: Colors.grey, fontSize: 14));
+        style: TextStyle(color: Colors.blueGrey, fontSize: 14));
   }
 
   ///用户名输入框
   Widget _buildUserNameInput() {
     return Container(
-        margin: EdgeInsets.only(top: 60),
-        height: 48,
+      color: Colors.white,
+        margin: EdgeInsets.only(top: 52),
+        height: 44,
         width: 360,
         child: TextField(
             onChanged: (value) => _username = value,
@@ -80,9 +90,10 @@ class _SignPageState extends State<SignPage> {
   ///密码输入框
   Widget _buildPasswordInput() {
     return Container(
-        height: 48,
+        color: Colors.white,
+        height: 44,
         width: 360,
-        margin: EdgeInsets.only(top: 12),
+        margin: EdgeInsets.only(top: 16),
         child: TextField(
             onChanged: (value) => _password = value,
             obscureText: true,
