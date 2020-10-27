@@ -51,7 +51,7 @@ class _SignPageState extends State<SignPage> {
   ///Logo和标题
   Widget _buildLogoAndTitle() {
     return Container(
-      margin: EdgeInsets.only(top: 64,bottom: 16),
+      margin: EdgeInsets.only(top: 64,bottom: 36),
         child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -78,7 +78,7 @@ class _SignPageState extends State<SignPage> {
   Widget _buildUserNameInput() {
     return Container(
       color: Colors.white,
-        margin: EdgeInsets.only(top: 52),
+        margin: EdgeInsets.only(top: 48),
         height: 44,
         width: 360,
         child: TextField(
@@ -144,8 +144,10 @@ class _SignPageState extends State<SignPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           InkWell(
-            child: Text('忘记密码', style: TextStyle(color: Colors.grey[600])),
-            onTap: () {},
+            child: Text('忘记密码'),
+            onTap: () {
+              toast(context, '尽请期待');
+            },
           )
         ],
       ),
