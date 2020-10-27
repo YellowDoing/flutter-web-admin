@@ -1,22 +1,16 @@
-import 'package:admin_flutter_web/entry/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 
+
+///存放用户数据
 class AuthData with ChangeNotifier{
 
 
   bool isLogin = false;
 
-  UserEntity userEntity;
 
-
-  void login(UserEntity userEntity){
-
-    isLogin = true;
-
-    this.userEntity = userEntity;
-
+  void setLogin(bool login){
+    isLogin = login;
     notifyListeners();
-
   }
 
 }

@@ -1,4 +1,5 @@
 import 'dart:html' as html;
+import 'package:admin_flutter_web/view/dashboard_view.dart';
 import 'package:admin_flutter_web/widget/menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class _HomePageState extends State<HomePage> {
 
   //Widget _title = Container();
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +45,23 @@ class _HomePageState extends State<HomePage> {
       width: double.infinity,
       height: double.infinity,
       padding: EdgeInsets.all(16),
-      child: Column(
-        children: [
-          /*_title*/
-        ],
-      ),
+      child: _getContentViewById(),
+    );
+  }
+
+  Widget _getContentViewById() {
+    Widget content;
+    switch(_menuSelectId){
+      case '1-1':
+        return DashboardView();
+
+    }
+
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.all(16),
+      child: content,
     );
   }
 
@@ -57,10 +72,10 @@ class _HomePageState extends State<HomePage> {
       onMenuSelected: _onMenuSelect,
       items: [
         MenuItem(
-            text: 'Navigation One',
-            subItems: ['subItem one', 'subItem two', 'subItem three'],
+            text: 'Dashboard',
+            subItems: ['分析页', 'subItem two', 'subItem three'],
             defaultExpanded: true,
-            icon: Icon(Icons.tune, size: 19)),
+            icon: Icon(Icons.dashboard, size: 19)),
         MenuItem(
             text: 'Navigation One',
             subItems: ['subItem one', 'subItem two', 'subItem three'],

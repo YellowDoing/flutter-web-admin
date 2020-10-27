@@ -1,11 +1,12 @@
+
 import 'package:admin_flutter_web/data/auth_data.dart';
-import 'package:admin_flutter_web/entry/user_entity.dart';
-import 'package:admin_flutter_web/util/http_util.dart';
-import 'package:admin_flutter_web/widget/input.dart';
+import 'package:admin_flutter_web/util/view_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+
+///登录页
 class SignPage extends StatefulWidget {
   @override
   _SignPageState createState() => _SignPageState();
@@ -86,6 +87,7 @@ class _SignPageState extends State<SignPage> {
             onChanged: (value) => _password = value,
             obscureText: true,
             decoration: InputDecoration(
+
                 labelText: '密码', border: OutlineInputBorder())));
   }
 
@@ -108,34 +110,25 @@ class _SignPageState extends State<SignPage> {
   ///登录
   void _login() {
     if (_username.isEmpty) {
+      toast(context, '请输入账号');
       return;
     }
 
     if (_password.isEmpty) {
+      toast(context, '请输入密码');
       return;
     }
 
-    HttpUtil<UserEntity>.post(
-      url: 'http://127.0.0.1:8080/admin/login',
-      body: {
-        'account': _username,
-        'password': _password,
-      },
-      success: (data, message) {
-        context.read<AuthData>().login(data);
-      },
-      error: (code, message) {
-      },
-      complete: () {
-      },
-    );
+    ///随便账号密码登陆成功
+    context.read<AuthData>().setLogin(true);
+    toast(context, '登录成功');
   }
 
   ///忘记密码
   Widget _buildForgetPassword() {
     return Container(
       width: 360,
-      margin: EdgeInsets.only(top: 4,bottom: 4),
+      margin: EdgeInsets.only(top: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

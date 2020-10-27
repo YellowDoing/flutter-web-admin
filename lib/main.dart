@@ -24,8 +24,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-     //home: HomePage(),
-      home: SignPage(),
+
+      home: context.watch<AuthData>().isLogin ?
+      HomePage():SignPage(),
     );
   }
 }
