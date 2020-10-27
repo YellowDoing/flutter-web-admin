@@ -2,7 +2,7 @@
 
 基于Flutter开发的后台管理系统模板
 
-![登录](https://note.youdao.com/yws/api/personal/file/WEB60c0f3fd6bc2a9ff6edfac995ee62be0?method=download&shareKey=5c9435e27631d839d619a7252211f538)
+![登录](https://note.youdao.com/yws/api/personal/file/WEBc3014804de4be859448633bac2fca246?method=download&shareKey=4b1f340b6594d7b25dfe4f704acdc504)
 
 
 ## Getting Started
