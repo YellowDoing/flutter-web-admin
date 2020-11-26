@@ -1,5 +1,5 @@
 import 'package:admin_flutter_web/data/auth_data.dart';
-import 'package:admin_flutter_web/page/sign_page.dart';
+import 'package:admin_flutter_web/page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +8,7 @@ import 'page/home_page.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<AuthData>(create: (_) => AuthData()),
+      ChangeNotifierProvider<AuthData>.value(value: authData),
     ],
     child: MyApp(),
   ));
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
 
       home: context.watch<AuthData>().isLogin ?
-      HomePage():SignPage(),
+      HomePage():LoginPage(),
     );
   }
 }

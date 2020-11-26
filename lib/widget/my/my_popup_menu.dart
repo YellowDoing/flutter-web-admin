@@ -863,7 +863,7 @@ Future<T> showMenu<T>({
     initialValue: initialValue,
     elevation: elevation,
     semanticLabel: label,
-    theme: Theme.of(context, shadowThemeOnly: true),
+    theme: Theme.of(context),
     popupMenuTheme: PopupMenuTheme.of(context),
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     shape: shape,
@@ -1124,7 +1124,7 @@ class PopupMenuButtonState<T> extends State<PopupMenuButton<T>> {
   }
 
   bool get _canRequestFocus {
-    final NavigationMode mode = MediaQuery.of(context, nullOk: true)?.navigationMode ?? NavigationMode.traditional;
+    final NavigationMode mode = MediaQuery.of(context)?.navigationMode ?? NavigationMode.traditional;
     switch (mode) {
       case NavigationMode.traditional:
         return widget.enabled;
