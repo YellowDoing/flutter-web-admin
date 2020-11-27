@@ -55,3 +55,42 @@ void toast(BuildContext ctx, String msg,
     }
   });
 }
+
+Widget refreshButton(GestureTapCallback tap) {
+  return Container(
+    child: FlatButton(
+      child: Row(
+        children: [
+          Icon(Icons.refresh, size: 16),
+          Padding(
+            padding: EdgeInsets.only(left: 2),
+            child: Text('刷新',
+                style: TextStyle(fontSize: 12, color: Colors.grey, height: 1)),
+          )
+        ],
+      ),
+      onPressed: tap,
+    ),
+    width: 58,
+    height: 24,
+  );
+
+  // return InkWell(
+  //   onTap: tap,
+  //   onHover: (e) {},
+  //   child: Row(
+  //     children: [
+  //       Icon(Icons.refresh, size: 16),
+  //       Padding(
+  //         padding: EdgeInsets.only(left: 2),
+  //         child: FlatButton(
+  //             child: Text('刷新',
+  //                 style:
+  //                     TextStyle(fontSize: 12, color: Colors.grey, height: 1)),onPressed: (){
+  //
+  //         },),
+  //       )
+  //     ],
+  //   ),
+  // );
+}

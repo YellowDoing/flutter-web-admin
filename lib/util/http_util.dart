@@ -27,7 +27,7 @@ class HttpUtil<T> {
       Map<String, String> headers,
       this.success,
       bool isJson = false,
-      bool key = false}) {
+      bool key = true}) {
     if (headers == null) {
       headers = {};
     }

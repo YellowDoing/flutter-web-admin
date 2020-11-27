@@ -11,11 +11,13 @@ class _TableViewState extends State<TableView> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return Column(
       children: [
         Container(
           width: double.infinity,
-          margin: EdgeInsets.all(16),
           decoration: BoxDecoration(
 
 
@@ -47,8 +49,8 @@ class _TableViewState extends State<TableView> {
                             return SimpleDialog(
                               elevation: 1,
                               children: [
-                                Text('sadawd')
-                                
+
+
                               ],
                             );
                           });

@@ -1,5 +1,7 @@
 import 'dart:html' as html;
 import 'package:admin_flutter_web/view/dashboard_view.dart';
+import 'package:admin_flutter_web/view/role_view.dart';
+import 'package:admin_flutter_web/view/table_view.dart';
 import 'package:admin_flutter_web/widget/menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,22 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Map<String, dynamic> _menu = {
-    'Navigation One': {
-      'items': ['subItem one', 'subItem two', 'subItem three'],
-      'icon': Icons.tune,
-    },
-    'Navigation Two': ['subItem one', 'subItem two', 'subItem three'],
-    'Navigation Three': ['subItem one', 'subItem two', 'subItem three'],
-    '个人页': ['个人中心', '个人设置'],
-    'Navigation Four': [],
-    'Navigation Five': [],
-  };
 
-  String _menuSelectId = '1-1';
 
-  //Widget _title = Container();
-
+  String _menuSelectId = '1';
 
 
   @override
@@ -49,14 +38,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  final Map<String,Widget> _views = new Map();
+
   Widget _getContentViewById() {
-    Widget content;
-    switch(_menuSelectId){
-      case '1-1':
-        return DashboardView();
 
+    Widget content = _views[_menuSelectId];
+    if(content == null){
+      switch(_menuSelectId){
+        case '1':
+          content = DashboardView();
+          break;
+        case '2':
+          content = RoleView();
+          break;
+      }
+      _views[_menuSelectId] = content;
     }
-
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -68,45 +65,32 @@ class _HomePageState extends State<HomePage> {
   ///左侧菜单导航
   Menu _buildMenu() {
     return Menu(
-      selectId: _menuSelectId,
+      menuController: MenuController(defaultSelectId: '1'),
       onMenuSelected: _onMenuSelect,
       items: [
         MenuItem(
-            text: 'Dashboard',
-            subItems: ['分析页', 'subItem two', 'subItem three'],
-            defaultExpanded: true,
+            text: '概览',
             icon: Icon(Icons.dashboard, size: 19)),
         MenuItem(
-            text: 'Navigation One',
-            subItems: ['subItem one', 'subItem two', 'subItem three'],
-            defaultExpanded: true,
-            icon: Icon(Icons.tune, size: 19)),
-        MenuItem(
-            text: 'Navigation One',
-            subItems: ['subItem one', 'subItem two', 'subItem three'],
-            icon: Icon(Icons.tune, size: 19)),
-        MenuItem(
-            text: '个人页',
-            subItems: ['个人中心', '个人设置'],
-            icon: Icon(Icons.tune, size: 19)),
-        MenuItem(
-            text: 'Navigation One',
-            subItems: ['subItem one', 'subItem two', 'subItem three'],
-            icon: Icon(Icons.tune, size: 19)),
-        MenuItem(text: 'Navigation One', icon: Icon(Icons.tune, size: 19)),
-        MenuItem(text: 'Navigation One', icon: Icon(Icons.tune, size: 19)),
-        MenuItem(
-            text: 'Navigation One',
-            subItems: ['subItem one', 'subItem two', 'subItem three'],
-            icon: Icon(Icons.tune, size: 19)),
+            text: '角色管理',
+            icon: Icon(Icons.supervisor_account_outlined, size: 19)),
+        // MenuItem(
+        //     text: 'Navigation One',
+        //     defaultExpand: true,
+        //     subItems: ['subItem one', 'subItem two', 'subItem three'],
+        //     icon: Icon(Icons.tune, size: 19)),
+        // MenuItem(
+        //     text: 'Navigation One',
+        //     defaultExpand: true,
+        //     subItems: ['subItem one', 'subItem two', 'subItem three'],
+        //     icon: Icon(Icons.tune, size: 19)),
       ],
     );
   }
 
   void _onMenuSelect(id) {
-    debugPrint('sdawdawd');
+    debugPrint(id);
     setState(() {
-      // _title = _buildTitle(title, subItem);
       _menuSelectId = id;
     });
     switch (id) {
@@ -151,7 +135,7 @@ class _HomePageState extends State<HomePage> {
   Widget _actionTranslate() {
     return PopupMenuButton(
         offset: Offset(0, 68),
-        tooltip: '多语言',
+        tooltip: '多语言  ',
         child: Padding(
           padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
           child: Row(
@@ -174,7 +158,7 @@ class _HomePageState extends State<HomePage> {
   Widget _actionUserInfo() {
     return PopupMenuButton(
         offset: Offset(0, 68),
-        tooltip: '我的',
+        tooltip: '我的  ',
         child: Padding(
           padding: EdgeInsets.fromLTRB(12, 0, 16, 0),
           child: Row(
@@ -200,7 +184,7 @@ class _HomePageState extends State<HomePage> {
   Widget _actionHelp() {
     return PopupMenuButton(
         offset: Offset(0, 68),
-        tooltip: '帮助',
+        tooltip: '帮助  ',
         child: Padding(
           padding: EdgeInsets.fromLTRB(12, 0, 14, 0),
           child: Icon(
@@ -215,7 +199,7 @@ class _HomePageState extends State<HomePage> {
   Widget _actionGithub() {
     return PopupMenuButton(
         offset: Offset(0, 68),
-        tooltip: 'Github',
+        tooltip: 'Github  ',
         child: GestureDetector(
           child: Padding(
             padding: EdgeInsets.fromLTRB(12, 0, 16, 0),
@@ -232,13 +216,4 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (_) => []);
   }
 
-  Widget _buildTitle(String title, String subTitle) {
-    var children = [Text(title)];
-
-    if (subTitle != null) {
-      children.add(Text(subTitle));
-    }
-
-    return Row(children: children);
-  }
 }

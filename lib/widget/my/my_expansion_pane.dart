@@ -512,7 +512,7 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
       ];
 
       if (child.showRightIcon) {
-        debugPrint(widget.children.length.toString());
+
         children.add(expandIconContainer);
       }
 

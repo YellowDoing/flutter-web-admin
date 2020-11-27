@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Image.asset('res/images/flutter-icon.png'),
         ),
         Text(
-          'Flutter Web Admin',
+          '后台管理系统',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
         )
       ],
@@ -137,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
           'username':_username,
         'password':_password
         },
+      key: false,
       success: (data, message) {
         toast(context, '登录成功');
         authData.setLogin(data);
