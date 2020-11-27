@@ -68,18 +68,18 @@ class _HomePageState extends State<HomePage> {
   ///左侧菜单导航
   Menu _buildMenu() {
     return Menu(
-      selectId: _menuSelectId,
+      menuController: MenuController(defaultSelectId: '1'),
       onMenuSelected: _onMenuSelect,
       items: [
         MenuItem(
             text: 'Dashboard',
             subItems: ['分析页', 'subItem two', 'subItem three'],
-            defaultExpanded: true,
+            defaultExpand: true,
             icon: Icon(Icons.dashboard, size: 19)),
         MenuItem(
             text: 'Navigation One',
             subItems: ['subItem one', 'subItem two', 'subItem three'],
-            defaultExpanded: true,
+            defaultExpand: true,
             icon: Icon(Icons.tune, size: 19)),
         MenuItem(
             text: 'Navigation One',

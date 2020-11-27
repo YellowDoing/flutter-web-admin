@@ -2,29 +2,39 @@ import 'package:flutter/material.dart';
 
 import 'my/my_expansion_pane.dart' as My;
 
-
+///菜单项
 class MenuItem {
-  int id;
-
+  ///显示的文本
   final String text;
 
+  ///子项显示的文本
   final List<String> subItems;
 
-  bool isExpanded;
+  ///是否默认展开
+  bool defaultExpand;
 
+  ///图标
   Widget icon;
 
+  MenuItem(
+      {@required this.text,
+        this.subItems = const [],
+        this.icon,
+        this.defaultExpand = false});
+}
 
-  MenuItem({
-    @required this.text,
-    this.subItems = const [],
-    this.icon,
-    bool defaultExpanded = false,
-  }):isExpanded = defaultExpanded;
+class MenuController extends ChangeNotifier {
+  String selectId;
+
+  MenuController({String defaultSelectId = '1'}) : selectId = defaultSelectId;
+
+  void select(String id) {
+    selectId = id;
+    notifyListeners();
+  }
 }
 
 class Menu extends StatefulWidget {
-
   final Color color;
 
   final Color expandColor;
@@ -41,18 +51,18 @@ class Menu extends StatefulWidget {
 
   final ValueChanged<String> onMenuSelected;
 
-  final String selectId;
+  final MenuController menuController;
 
   Menu(
       {@required this.items,
-      this.width = 230,
-      this.height = double.infinity,
-      this.color = Colors.white,
-      this.selectColor = const Color(0xFFEEEEEE),
-      this.selectItemColor = const Color(0xFFEEEEEE),
-      this.expandColor = const Color(0xdcfafafa),
-      this.selectId = '',
-      @required this.onMenuSelected})
+        this.width = 230,
+        this.height = double.infinity,
+        this.color = Colors.white,
+        this.selectColor = const Color(0xFFEEEEEE),
+        this.selectItemColor = const Color(0xFFEEEEEE),
+        this.expandColor = const Color(0xdcfafafa),
+        @required this.menuController,
+        @required this.onMenuSelected})
       : assert(onMenuSelected != null),
         assert(items != null);
 
@@ -61,12 +71,20 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-
   String _selectId;
+
+  final List<bool> _expands = [];
 
   @override
   void initState() {
-    //widget.items.forEach((element)=>element.isExpanded = element.defaultExpanded);
+    _selectId = widget.menuController.selectId;
+    widget.menuController.addListener(() {
+      setState(() {
+        _selectId = widget.menuController.selectId;
+        widget.onMenuSelected?.call(_selectId);
+      });
+    });
+    widget.items.forEach((element) {_expands.add(element.defaultExpand);});
     super.initState();
   }
 
@@ -80,9 +98,9 @@ class _MenuState extends State<Menu> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-                child: Wrap(
-              children: [_buildExpansionPanelList()],
-            )),
+                child: SingleChildScrollView(
+                  child: _buildExpansionPanelList(),
+                )),
             _buildRightVerticalLine()
           ],
         ));
@@ -94,15 +112,15 @@ class _MenuState extends State<Menu> {
 
         var item = widget.items[index];
 
-        setState(() {
-          item.isExpanded = !item.isExpanded;
-        });
-
-        if (item.isExpanded && item.subItems.isEmpty) {
-         // setState(() {
+        if (item.subItems.isEmpty) {
+          setState(() {
             _selectId = (index + 1).toString();
-          //});
+          });
           widget.onMenuSelected?.call(_selectId);
+        }else{
+          setState(() {
+            _expands[index]= !isExpanded;
+          });
         }
       },
       children: _buildMenuItems(),
@@ -120,11 +138,12 @@ class _MenuState extends State<Menu> {
 
   List<My.ExpansionPanel> _buildMenuItems() {
     return widget.items.map((menuItem) {
-      var id = (widget.items.indexOf(menuItem) + 1).toString();
+      var index = widget.items.indexOf(menuItem);
+      var id = ( index + 1).toString();
 
       return My.ExpansionPanel(
           showRightIcon: menuItem.subItems.isNotEmpty,
-          isExpanded: menuItem.isExpanded,
+          isExpanded: _expands[index],
           headerColor: (_selectId == id && menuItem.subItems.isEmpty)
               ? widget.selectColor
               : null,
@@ -165,14 +184,12 @@ class _MenuState extends State<Menu> {
         color: _selectId == itemId ? widget.selectItemColor : null,
         width: double.infinity,
         padding: EdgeInsets.fromLTRB(42, 12, 0, 12),
-        child: Text(
-          subTitle,
-        ),
+        child: Text(subTitle),
       ),
       onPressed: () {
-        //setState(() {
+        setState(() {
           _selectId = itemId;
-        //});
+        });
         widget.onMenuSelected?.call(_selectId);
       },
     );
