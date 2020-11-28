@@ -22,12 +22,6 @@ class MyDataTableSource<T> extends DataTableSource {
     );
   }
 
-  //[
-  //         DataCell(Text('${data[index]}')),
-  //         DataCell(Text('${data[index]}')),
-  //         DataCell(Text('${data[index]}')),
-  //         DataCell(Text('${data[index]}')),
-  //       ],
 
   @override
   bool get isRowCountApproximate => false;

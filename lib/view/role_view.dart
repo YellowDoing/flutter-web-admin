@@ -13,6 +13,7 @@ class RoleView extends StatefulWidget {
 }
 
 class _RoleViewState extends State<RoleView> {
+
   final List<RoleEntity> _data = new List();
 
   @override

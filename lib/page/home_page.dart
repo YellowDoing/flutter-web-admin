@@ -1,5 +1,6 @@
 import 'dart:html' as html;
 import 'package:admin_flutter_web/view/dashboard_view.dart';
+import 'package:admin_flutter_web/view/level_view.dart';
 import 'package:admin_flutter_web/view/role_view.dart';
 import 'package:admin_flutter_web/view/table_view.dart';
 import 'package:admin_flutter_web/widget/menu.dart';
@@ -51,6 +52,9 @@ class _HomePageState extends State<HomePage> {
         case '2':
           content = RoleView();
           break;
+        case '3-1':
+          content = LevelView();
+          break;
       }
       _views[_menuSelectId] = content;
     }
@@ -74,11 +78,11 @@ class _HomePageState extends State<HomePage> {
         MenuItem(
             text: '角色管理',
             icon: Icon(Icons.supervisor_account_outlined, size: 19)),
-        // MenuItem(
-        //     text: 'Navigation One',
-        //     defaultExpand: true,
-        //     subItems: ['subItem one', 'subItem two', 'subItem three'],
-        //     icon: Icon(Icons.tune, size: 19)),
+        MenuItem(
+            text: '游戏设置',
+            defaultExpand: true,
+            subItems: ['等级'],
+            icon: Icon(Icons.tune, size: 19)),
         // MenuItem(
         //     text: 'Navigation One',
         //     defaultExpand: true,

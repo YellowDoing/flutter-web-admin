@@ -74,23 +74,38 @@ Widget refreshButton(GestureTapCallback tap) {
     width: 58,
     height: 24,
   );
+}
 
-  // return InkWell(
-  //   onTap: tap,
-  //   onHover: (e) {},
-  //   child: Row(
-  //     children: [
-  //       Icon(Icons.refresh, size: 16),
-  //       Padding(
-  //         padding: EdgeInsets.only(left: 2),
-  //         child: FlatButton(
-  //             child: Text('刷新',
-  //                 style:
-  //                     TextStyle(fontSize: 12, color: Colors.grey, height: 1)),onPressed: (){
-  //
-  //         },),
-  //       )
-  //     ],
-  //   ),
-  // );
+Widget operateButton(String text, GestureTapCallback tap) {
+
+  return InkWell(
+    child: Padding(
+      padding: EdgeInsets.only(left: 2,right: 2),
+      child: Text(
+        text,
+        style: TextStyle(color: Color(0xff1890ff)),
+      ),
+    ),
+    onTap: tap,
+  );
+}
+
+
+Widget redOperateButton(String text, GestureTapCallback tap) {
+  return InkWell(
+      child: Padding(
+        padding: EdgeInsets.only(left: 2,right: 2),
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.redAccent),
+        ),
+      ),
+      onTap: tap);
+}
+
+Widget vLine({double height = 12}){
+  return Container(height:height,
+    width: 1,
+    margin: EdgeInsets.only(left: 5,right: 5),
+    color: Colors.grey[300],);
 }

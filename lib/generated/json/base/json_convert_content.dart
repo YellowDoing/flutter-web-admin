@@ -7,6 +7,8 @@ import 'package:admin_flutter_web/entry/user_entity.dart';
 import 'package:admin_flutter_web/generated/json/user_entity_helper.dart';
 import 'package:admin_flutter_web/entry/role_entity.dart';
 import 'package:admin_flutter_web/generated/json/role_entity_helper.dart';
+import 'package:admin_flutter_web/entry/level_entity.dart';
+import 'package:admin_flutter_web/generated/json/level_entity_helper.dart';
 
 class JsonConvert<T> {
 	T fromJson(Map<String, dynamic> json) {
@@ -20,21 +22,24 @@ class JsonConvert<T> {
   static _getFromJson<T>(Type type, data, json) {
     switch (type) {			case UserEntity:
 			return userEntityFromJson(data as UserEntity, json) as T;			case RoleEntity:
-			return roleEntityFromJson(data as RoleEntity, json) as T;    }
+			return roleEntityFromJson(data as RoleEntity, json) as T;			case LevelEntity:
+			return levelEntityFromJson(data as LevelEntity, json) as T;    }
     return data as T;
   }
 
   static _getToJson<T>(Type type, data) {
 		switch (type) {			case UserEntity:
 			return userEntityToJson(data as UserEntity);			case RoleEntity:
-			return roleEntityToJson(data as RoleEntity);    }
+			return roleEntityToJson(data as RoleEntity);			case LevelEntity:
+			return levelEntityToJson(data as LevelEntity);    }
     return data as T;
   }
   //Go back to a single instance by type
   static _fromJsonSingle(String type, json) {
     switch (type) {			case 'UserEntity':
 			return UserEntity().fromJson(json);			case 'RoleEntity':
-			return RoleEntity().fromJson(json);    }
+			return RoleEntity().fromJson(json);			case 'LevelEntity':
+			return LevelEntity().fromJson(json);    }
     return null;
   }
 
@@ -42,7 +47,8 @@ class JsonConvert<T> {
   static _getListFromType(String type) {
     switch (type) {			case 'UserEntity':
 			return List<UserEntity>();			case 'RoleEntity':
-			return List<RoleEntity>();    }
+			return List<RoleEntity>();			case 'LevelEntity':
+			return List<LevelEntity>();    }
     return null;
   }
 

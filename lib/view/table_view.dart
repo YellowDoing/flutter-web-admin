@@ -18,17 +18,16 @@ class _TableViewState extends State<TableView> {
       children: [
         Container(
           width: double.infinity,
-          decoration: BoxDecoration(
-
-
-          ),
+          decoration: BoxDecoration(),
           child: My.DataTable(columns: [
             My.DataColumn(label: Text('ID')),
             My.DataColumn(label: Text('名称')),
             My.DataColumn(label: Text('年龄')),
             My.DataColumn(label: Text('操作')),
-          ], rows: [
-            My.DataRow(
+          ],
+              rows: [
+
+                My.DataRow(
                 cells: [
                   My.DataCell(Text('1')),
                   My.DataCell(Text('测试')),

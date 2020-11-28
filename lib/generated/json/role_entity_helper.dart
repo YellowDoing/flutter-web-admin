@@ -25,7 +25,6 @@ roleEntityFromJson(RoleEntity data, Map<String, dynamic> json) {
 	if (json['experience'] != null) {
 		data.experience = json['experience']?.toInt();
 	}
-
 	if (json['createAt'] != null) {
 		data.createAt = json['createAt']?.toString();
 	}
@@ -42,5 +41,6 @@ Map<String, dynamic> roleEntityToJson(RoleEntity entity) {
 	data['sub'] = entity.sub;
 	data['level'] = entity.level;
 	data['experience'] = entity.experience;
+	data['createAt'] = entity.createAt;
 	return data;
 }
