@@ -8,6 +8,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../util/view_util.dart';
+
 
 ///登录页
 class LoginPage extends StatefulWidget {
@@ -132,19 +134,10 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    HttpUtil<UserEntity>.post('/admin/login',
-      body: {
-          'username':_username,
-        'password':_password
-        },
-      key: false,
-      success: (data, message) {
-        toast(context, '登录成功');
-        authData.setLogin(data);
-      },
-    );
-
-
+    if(_username == "admin" && _password == "123456"){
+      authData.setLogin(true);
+    }else
+      toast(context, '账号密码不正确');
   }
 
 }

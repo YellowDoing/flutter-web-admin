@@ -2,7 +2,6 @@
 import 'package:admin_flutter_web/common/my_data_table_source.dart';
 import 'package:admin_flutter_web/entry/role_entity.dart';
 import 'package:admin_flutter_web/util/http_util.dart';
-import 'package:admin_flutter_web/util/my_util.dart';
 import 'package:admin_flutter_web/util/view_util.dart';
 import 'package:flutter/material.dart';
 
@@ -44,8 +43,6 @@ class _RoleViewState extends State<RoleView> {
             DataCell(ClipOval(child: Image.network(role.avatar, width: 32))),
             DataCell(Text(role.name)),
             DataCell(Text(role.level.toString())),
-            DataCell(Text(getProfessionName(role.main))),
-            DataCell(Text(getProfessionName(role.sub))),
           ];
         }
         ),

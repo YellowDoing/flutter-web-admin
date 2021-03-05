@@ -36,12 +36,10 @@ class HttpUtil<T> {
       headers['Content-Type'] = 'application/json';
     }
 
-    if (key) {
-      headers['key'] = authData.userEntity.key;
-    }
 
 
-    http.post(_host + url, body: body, headers: headers).then((response) {
+
+    http.post(Uri.parse(_host + url), body: body, headers: headers).then((response) {
       debugPrint(url);
 
       var result = json.decode(_utf8decoder.convert(response.bodyBytes));

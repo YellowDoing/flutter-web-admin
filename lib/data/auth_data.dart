@@ -11,26 +11,19 @@ final authData =  new AuthData();
 ///存放用户数据
 class AuthData with ChangeNotifier{
 
-
+  //登录状态
   bool isLogin = false;
-
-  UserEntity userEntity;
-
 
   AuthData(){
     SharedPreferences.getInstance().then((sp)  {
-      isLogin = sp.containsKey("userEntity");
-      if(isLogin){
-        userEntity =  JsonConvert.fromJsonAsT<UserEntity>(jsonDecode(sp.getString("userEntity")));
-    }
+      isLogin = sp.getBool("isLogin")??false;
     });
   }
 
-  void setLogin(UserEntity userEntity){
-    isLogin = true;
-    this.userEntity = userEntity;
+  void setLogin(bool login){
+    isLogin = login;
     SharedPreferences.getInstance().then((sp) => {
-      sp.setString("userEntity", jsonEncode(userEntity.toJson()))
+      sp.setBool("isLogin", isLogin)
     });
     notifyListeners();
   }

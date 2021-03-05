@@ -8,16 +8,9 @@
 ## Getting Started
 
 
+请将Flutter升级到2.0
+
+登录账号:admin
+密码:123456
 
 
-如果你Flutter使用的Channel是release，请先切换到beta，目前release还不支持开启web
-
-
-
-```
-#切换到beta版
-flutter channel beta
-
-#开启web
-flutter config --enable-web
-```
