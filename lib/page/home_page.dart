@@ -1,4 +1,5 @@
 import 'dart:html' as html;
+import 'package:admin_flutter_web/view/calendar.dart';
 import 'package:admin_flutter_web/view/dashboard_view.dart';
 import 'package:admin_flutter_web/view/level_view.dart';
 import 'package:admin_flutter_web/view/role_view.dart';
@@ -48,8 +49,8 @@ class _HomePageState extends State<HomePage> {
         case '1':
           content = DashboardView();
           break;
-        case '2':
-          content = RoleView();
+        case '2-1':
+          content = CalendarView();
           break;
         case '3-1':
           content = LevelView();
@@ -72,15 +73,19 @@ class _HomePageState extends State<HomePage> {
       onMenuSelected: _onMenuSelect,
       items: [
         MenuItem(
-            text: '概览',
+            text: '仪表盘',
             icon: Icon(Icons.dashboard, size: 19)),
         MenuItem(
-            text: '角色管理',
-            icon: Icon(Icons.supervisor_account_outlined, size: 19)),
+            text: '组件',
+            subItems: ['日历'],
+            icon: Icon(Icons.tune, size: 19)),
         MenuItem(
-            text: '游戏设置',
+            text: '表格',
             defaultExpand: true,
-            subItems: ['等级'],
+            icon: Icon(Icons.tune, size: 19)),
+        MenuItem(
+            text: '多媒体',
+            defaultExpand: true,
             icon: Icon(Icons.tune, size: 19)),
         // MenuItem(
         //     text: 'Navigation One',
